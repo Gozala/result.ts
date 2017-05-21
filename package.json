@@ -1,0 +1,28 @@
+{
+  "name": "Result.ts",
+  "version": "0.0.1",
+  "description": "Library for representing results of computation that may fail",
+  "keywords": [
+    "Result"
+  ],
+  "main": "./Result",
+  "typings": "./Result.d.ts",
+  "repository": "https://github.com/gozala/Result.ts",
+  "author": "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)",
+  "scripts": {
+    "test": "./scripts/test-tape",
+    "test:tape": "./scripts/test-tape",
+    "build": "./scripts/build-node",
+    "prepublishOnly": "./scripts/build-node",
+    "build:schema": "./scripts/build-schema",
+    "build:node": "./scripts/build-node",
+    "build:clean": "./scripts/build-clean"
+  },
+  "license": "MPL2",
+  "devDependencies": {
+    "@types/tape": "^4.2.30",
+    "tape": "^4.6.3",
+    "ts-node": "^3.0.4",
+    "typescript": "^2.3.2"
+  }
+}

@@ -1,0 +1,1 @@
+ts-node --compilerOptions '{"allowJs":true}' node_modules/tape/bin/tape test/**/*.ts
