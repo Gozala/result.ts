@@ -1,4 +1,8 @@
-# `Result`
+# Result
+
+[![travis][travis-image]][travis-url]
+[![npm][npm-image]][npm-url]
+[![downloads][downloads-image]][downloads-url]
 
 Library for representing the `Result` of a computation that may fail. Which is a type friendly alternative to handling errors than exceptions are.
 
@@ -395,3 +399,10 @@ This library is inspired by:
 [type guards]:https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
 [Result.elm]:http://package.elm-lang.org/packages/elm-lang/core/latest/Result
 [Result.rst]:https://doc.rust-lang.org/std/result/enum.Result.html
+
+[travis-image]: https://travis-ci.org/gozala/result.ts.svg?branch=master
+[travis-url]: https://travis-ci.org/gozala/result.ts
+[npm-image]: https://img.shields.io/npm/v/result.ts.svg
+[npm-url]: https://npmjs.org/package/result.ts
+[downloads-image]: https://img.shields.io/npm/dm/result.ts.svg
+[downloads-url]: https://npmjs.org/package/result.ts
