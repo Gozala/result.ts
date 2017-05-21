@@ -1,6 +1,6 @@
 {
   "name": "result.ts",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Library for representing results of computation that may fail",
   "keywords": [
     "Result"
