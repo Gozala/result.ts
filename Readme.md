@@ -400,8 +400,8 @@ This library is inspired by:
 [Result.elm]:http://package.elm-lang.org/packages/elm-lang/core/latest/Result
 [Result.rst]:https://doc.rust-lang.org/std/result/enum.Result.html
 
-[travis-image]: https://travis-ci.org/gozala/result.ts.svg?branch=master
-[travis-url]: https://travis-ci.org/gozala/result.ts
+[travis-image]: https://travis-ci.org/Gozala/result.ts.svg?branch=master
+[travis-url]: https://travis-ci.org/Gozala/result.ts
 [npm-image]: https://img.shields.io/npm/v/result.ts.svg
 [npm-url]: https://npmjs.org/package/result.ts
 [downloads-image]: https://img.shields.io/npm/dm/result.ts.svg
