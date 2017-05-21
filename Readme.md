@@ -20,7 +20,7 @@ Actual `Result<x, a>` interface is more complex as it provides all of the librar
 All the examples above assume following import:
 
 ```ts
-import * as Result from 'Result.ts'
+import * as Result from 'result.ts'
 ```
 
 ### Construct results

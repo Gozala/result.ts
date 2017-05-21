@@ -1,13 +1,13 @@
 {
-  "name": "Result.ts",
-  "version": "0.0.1",
+  "name": "result.ts",
+  "version": "0.0.0",
   "description": "Library for representing results of computation that may fail",
   "keywords": [
     "Result"
   ],
   "main": "./Result",
   "typings": "./Result.d.ts",
-  "repository": "https://github.com/gozala/Result.ts",
+  "repository": "https://github.com/gozala/result.ts",
   "author": "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)",
   "scripts": {
     "test": "./scripts/test-tape",
