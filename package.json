@@ -13,12 +13,12 @@
     "test": "./scripts/test-tape",
     "test:tape": "./scripts/test-tape",
     "build": "./scripts/build-node",
-    "prepublishOnly": "./scripts/build-node",
+    "prepare": "./scripts/build-node",
     "build:schema": "./scripts/build-schema",
     "build:node": "./scripts/build-node",
     "build:clean": "./scripts/build-clean"
   },
-  "license": "MPL2",
+  "license": "MPL-2.0",
   "devDependencies": {
     "@types/tape": "^4.2.30",
     "tape": "^4.6.3",
