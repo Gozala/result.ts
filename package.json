@@ -10,19 +10,20 @@
   "repository": "https://github.com/gozala/result.ts",
   "author": "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)",
   "scripts": {
-    "test": "./scripts/test-tape",
-    "test:tape": "./scripts/test-tape",
-    "build": "./scripts/build-node",
-    "prepare": "./scripts/build-node",
-    "build:schema": "./scripts/build-schema",
-    "build:node": "./scripts/build-node",
-    "build:clean": "./scripts/build-clean"
+    "test": "npm run test:tape",
+    "test:tape": "ts-node node_modules/tape/bin/tape test/**/*.ts",
+    "build": "npm run build:clean && npm run build:node && npm run build:docs",
+    "prepare": "npm run build:node",
+    "build:node": "tsc --project tsconfig.build.json",
+    "build:docs": "typedoc --entryPoint '\"Result\"' --tsconfig tsconfig.build.json --readme none --theme minimal --out ./docs",
+    "build:clean": "rm -f ./*.js && rm -f ./*.d.ts"
   },
   "license": "MPL-2.0",
   "devDependencies": {
     "@types/tape": "^4.2.30",
     "tape": "^4.6.3",
     "ts-node": "^3.0.4",
+    "typedoc": "^0.7.1",
     "typescript": "^2.3.2"
   }
 }
