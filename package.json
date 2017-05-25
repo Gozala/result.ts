@@ -1,6 +1,6 @@
 {
   "name": "result.ts",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Library for representing results of computation that may fail",
   "keywords": [
     "Result"
@@ -14,6 +14,7 @@
     "test:tape": "ts-node node_modules/tape/bin/tape test/**/*.ts",
     "build": "npm run build:clean && npm run build:node && npm run build:docs",
     "prepare": "npm run build:node",
+    "prepublishOnly": "npm run build && npm run test",
     "build:node": "tsc --project tsconfig.build.json",
     "build:docs": "typedoc --entryPoint '\"Result\"' --tsconfig tsconfig.build.json --readme none --theme minimal --out ./docs",
     "build:clean": "rm -f ./*.js && rm -f ./*.d.ts"

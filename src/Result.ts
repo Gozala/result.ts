@@ -59,7 +59,7 @@ export class Ok<a> extends Methods<any, a> {
   /**
    * Sentinel property for diferentitating between `Ok` and `Error` results.
    */
-  isOk: true
+  isOk: true = true
   /**
    * @param value Success value of this result.
    */
@@ -76,7 +76,7 @@ export class Error<x> extends Methods<x, any> {
   /**
    * Sentinel property for diferentitating between `Ok` and `Error` results.
    */
-  isOk: false
+  isOk: false = false
   /**
    * @param error Error value of this result.
    */
