@@ -1,6 +1,6 @@
 {
   "name": "result.ts",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Library for representing results of computation that may fail",
   "keywords": [
     "Result"
@@ -19,7 +19,7 @@
     "build:docs": "typedoc --entryPoint '\"Result\"' --tsconfig tsconfig.build.json --readme none --theme minimal --out ./docs",
     "build:clean": "rm -f ./*.js && rm -f ./*.d.ts"
   },
-  "license": "MPL-2.0",
+  "license": "MIT",
   "devDependencies": {
     "@types/tape": "^4.2.30",
     "tape": "^4.6.3",
