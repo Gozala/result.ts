@@ -30,7 +30,6 @@ test('test ok', test => {
 
 
   test.equal(ok(5).isOk, true, `ok(5).isOk -> true`)
-  // test.equal(ok(5).isError, false, `ok(5).isError -> false`)
 
 
 
@@ -87,7 +86,6 @@ test('test error', test => {
   }
 
   test.equal(error(5).isOk, false, `error(5).isOk -> false`)
-  // test.equal(error(5).isError, true, `error(5).isError -> true`)
   test.equal(error(3).toValue(7),
               7,
               `error(3).toValue(7) -> 7`)
