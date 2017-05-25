@@ -3,6 +3,7 @@
 [![travis][travis-image]][travis-url]
 [![npm][npm-image]][npm-url]
 [![downloads][downloads-image]][downloads-url]
+[![docs][docs-image]][docs-url]
 
 Library for representing the `Result` of a computation that may fail. Which is a type friendly alternative to handling errors than exceptions are.
 
@@ -85,19 +86,6 @@ if (result.isOk) {
   console.log(result.value + 15)
 } else {
   console.error(result.error)
-}
-```
-
-#### `result.isError:boolean`
-
-For the symetry there is also `isError:boolean` common member:
-
-```ts
-const result = readInt(data)
-if (result.isError) {
-  console.error(result.error)
-} else {
-  console.log(result.value + 15)
 }
 ```
 
@@ -406,3 +394,5 @@ This library is inspired by:
 [npm-url]: https://npmjs.org/package/result.ts
 [downloads-image]: https://img.shields.io/npm/dm/result.ts.svg
 [downloads-url]: https://npmjs.org/package/result.ts
+[docs-image]:https://img.shields.io/badge/typedoc-latest-ff69b4.svg?style=flat
+[docs-url]:https://gozala.github.io/result.ts/
