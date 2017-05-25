@@ -30,7 +30,9 @@ test('test ok', test => {
 
 
   test.equal(ok(5).isOk, true, `ok(5).isOk -> true`)
-  test.equal(ok(5).isError, false, `ok(5).isError -> false`)
+  // test.equal(ok(5).isError, false, `ok(5).isError -> false`)
+
+
 
   test.equal(ok(3).toValue(4), 3, `ok(3).toValue(4) -> 3`)
   test.equal(ok(-4).toMaybe(), -4, `ok(-4).toMaybe() -> -4`)
@@ -56,7 +58,8 @@ test('test ok', test => {
   test.deepEqual(ok('beep').capture(_ => error('bop')),
                   ok('beep'),
                   `ok('beep').capture(_ => error('bop')) -> ok('beep')`)
-  test.deepEqual(ok('great').recover(JSON.stringify),
+  
+test.deepEqual(ok('great').recover(JSON.stringify),
                   ok('great'),
                   `ok('great').recover(JSON.stringify) -> ok('great')`)
   test.deepEqual(ok(11).and(ok('foo')),
@@ -79,12 +82,12 @@ test('test error', test => {
   const {ok, error} = Result
 
   const failure = error('Oops!')
-  if (failure.isError) {
+  if (!failure.isOk) {
     test.equal(failure.error, 'Oops!', `error('Oops!').error -> 'Oops!'`)
   }
 
   test.equal(error(5).isOk, false, `error(5).isOk -> false`)
-  test.equal(error(5).isError, true, `error(5).isError -> true`)
+  // test.equal(error(5).isError, true, `error(5).isError -> true`)
   test.equal(error(3).toValue(7),
               7,
               `error(3).toValue(7) -> 7`)
