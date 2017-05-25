@@ -1,154 +1,152 @@
-type Maybe <a> = void|null|undefined|a
+/**
+ * Library for representing the `Result` of a computation that may fail. Which
+ * is a more type friendly way to handle errors than exceptions.
+ */
 
-export interface API <x, a> {
-  map <b> (f:(value:a) => b):Result<x, b>
-  format <y> (f:(error:x) => y):Result<y, a>
-  chain <b> (next:(value:a) => Result<x, b>):Result<x, b>
-  capture <y> (next:(error:x) => Result<y, a>):Result<y, a>
-  recover (f:(error:x) => a):Result<x, a>
-  and <b> (result:Result<x, b>):Result<x, b>
-  or <y> (result:Result<y, a>):Result<y, a>
-  toValue(fallback:a):a
-  toMaybe():null|a
-}
+import {Maybe} from "maybe.ts"
 
-export interface Ok <x, a> extends API<x, a> {
-  isOk:true
-  isError:false
-  value:a
-}
-
-export interface Error <x, a> extends API<x, a> {
-  isOk:false
-  isError:true
-  error:x
-}
-
-export type Result <x, a> =
-  | Ok<x, a>
-  | Error<x, a>
-
-
-class Success <x, a> implements Ok<x, a> {
-  isOk:true = true
-  isError:false = false
-  constructor(public value:a) {
+/**
+ * `Result<x, a>` implements `Methods<x, a>` interface that just provides a
+ * method chaining based API for all of the exported functions.
+ * @param x Represents type of the `error` for failed results.
+ * @param a Represents type of the `value` for suceeded results.
+ */
+export class Methods<x, a> {
+  /**
+   * Applies given `f` function `this` result. If the this result is
+   * `Ok` underlaying value will be mapped. If the result is an
+   * `Error`, the same error value will propagate through.
+   * 
+   * ```ts
+   * Result.ok(3).map(x => x + 1) // => Result.ok(4)
+   * Result.error('bad input').map(x => x + 1) // => Result.error('bad input')
+   * ```
+   */
+  map<b>(this: Result<x, a>, f: (value: a) => b): Result<x, b> {
+    return map(f, this)
   }
-  map <b> (f:(value:a) => b):Result<x, b> {
-    return ok(f(this.value))
+  format<y>(this: Result<x, a>, f: (error: x) => y): Result<y, a> {
+    return format(f, this)
   }
-  format <y> (_:(error:x) => y):Result<y, a> {
-    return <Result<any, a>>this
+  chain<b>(this: Result<x, a>, next: (value: a) => Result<x, b>): Result<x, b> {
+    return chain(next, this)
   }
-  chain <b> (then:(value:a) => Result<x, b>):Result<x, b> {
-    return then(this.value)
+  capture<y>(this: Result<x, a>, next: (error: x) => Result<y, a>): Result<y, a> {
+    return capture(next, this)
   }
-  capture <y> (_:(error:x) => Result<y, a>):Result<y, a> {
-    return <Result<any, a>>this
+  recover(this: Result<x, a>, f: (error: x) => a): Result<x, a> {
+    return recover(f, this)
   }
-  recover (_:(error:x) => a):Result<x, a> {
-    return <Result<any, a>>this
+  and<b>(this: Result<x, a>, result: Result<x, b>): Result<x, b> {
+    return and(this, result)
   }
-  and <b> (result:Result<x, b>):Result<x, b> {
-    return result
+  or<y>(this: Result<x, a>, result: Result<y, a>): Result<y, a> {
+    return or(this, result)
   }
-  or <y> (_:Result<y, a>):Result<y, a> {
-    return <Result<any, a>>this
+  toValue(this: Result<x, a>, fallback: a): a {
+    return toValue(this, fallback)
   }
-  toValue(_:a):a {
-    return this.value
-  }
-  toMaybe():null|a {
-    return this.value
+  toMaybe(this: Result<x, a>): Maybe<a> {
+    return toMaybe(this)
   }
 }
 
-class Failure <x, a> implements Error<x, a> {
-  isOk:false = false
-  isError:true = true
-  constructor(public error:x) {
-
-  }
-  map <b> (_:(value:a) => b):Result<x, b> {
-    return <Result<x, any>> this
-  }
-  format <y> (f:(error:x) => y):Result<y, a> {
-    return error(f(this.error))
-  }
-  chain <b> (_:(value:a) => Result<x, b>):Result<x, b> {
-    return <Result<x, any>>this
-  }
-  capture <y> (next:(error:x) => Result<y, a>):Result<y, a> {
-    return next(this.error)
-  }
-  recover (f:(error:x) => a):Result<x, a> {
-    return ok(f(this.error))
-  }
-  and <b> (_:Result<x, b>):Result<x, b> {
-    return <Result<x, any>>this
-  }
-  or <y> (result:Result<y, a>):Result<y, a> {
-    return result
-  }
-  toValue(fallback:a):a {
-    return fallback
-  }
-  toMaybe():null|a {
-    return null
+/**
+ * Represents succeeded result and contains result `value`.
+ * @param a type of the `value` for this result.
+ */
+export class Ok<a> extends Methods<any, a> {
+  /**
+   * Sentinel property for diferentitating between `Ok` and `Error` results.
+   */
+  isOk: true
+  /**
+   * @param value Success value of this result.
+   */
+  constructor(public value: a) {
+    super()
   }
 }
 
-export const ok = <a> (value:a):Result<any, a> =>
-  new Success(value)
+/**
+ * Represents failer result and contains result `error`.
+ * @param x type of the `error` value for failed result.
+ */
+export class Error<x> extends Methods<x, any> {
+  /**
+   * Sentinel property for diferentitating between `Ok` and `Error` results.
+   */
+  isOk: false
+  /**
+   * @param error Error value of this result.
+   */
+  constructor(public error: x) {
+    super()
+  }
+}
 
-export const error = <x> (error:x):Result<x, any> =>
-  new Failure(error)
+/**
+ * `Result<x, a>` is the type used for returning and propagating errors.
+ * It is either `Ok<a>`, representing success and containing a value of type
+ * `a`, or an `Error<x>`, representing failure and containing an error value
+ * of type `x`.
+ */
+export type Result<x, a> =
+  | Ok<a> & Methods<x, a>
+  | Error<x> & Methods<x, a>
 
-export const fromMaybe = <x, a> (error:x, value:Maybe<a>):Result<x, a> => {
+
+export const ok = <a>(value: a): Result<any, a> =>
+  new Ok(value)
+
+export const error = <x>(error: x): Result<x, any> =>
+  new Error(error)
+
+export const fromMaybe = <x, a>(error: x, value: Maybe<a>): Result<x, a> => {
   const result = value != null
-    ? <Ok<x, a>>new Success(value)
-    : <Error<x, a>>new Failure(error)
+    ? new Ok(value)
+    : new Error(error)
   return result
 }
 
 export const chain =
-  <x, a, b> (f:(value:a) => Result<x, b>, result:Result<x, a>):Result<x, b> =>
-  result.chain(f)
+  <x, a, b>(f: (value: a) => Result<x, b>, result: Result<x, a>): Result<x, b> =>
+    result.isOk ? f(result.value) : result
 
 export const capture =
-  <x, y, a> (f:(error:x) => Result<y, a>, result:Result<x, a>):Result<y, a> =>
-  result.capture(f)
+  <x, y, a>(f: (error: x) => Result<y, a>, result: Result<x, a>): Result<y, a> =>
+    result.isOk ? result : f(result.error)
 
 export const recover =
-  <x, a> (f:(error:x) => a, result:Result<x, a>):Result<x, a> =>
-  result.recover(f)
+  <x, a>(f: (error: x) => a, result: Result<x, a>): Result<x, a> =>
+    result.isOk ? result : new Ok(f(result.error))
 
 export const and =
-  <x, a, b> (left:Result<x, a>, right:Result<x, b>):Result<x, b> =>
-  left.and(right)
+  <x, a, b>(left: Result<x, a>, right: Result<x, b>): Result<x, b> =>
+    left.isOk ? right : left
 
 export const or =
-  <x, y, a> (left:Result<x, a>, right:Result<y, a>):Result<y, a> =>
-  left.or(right)
+  <x, y, a>(left: Result<x, a>, right: Result<y, a>): Result<y, a> =>
+    left.isOk ? left : right
 
 export const map =
-  <x, a, b> (f:(value:a) => b, result:Result<x, a>):Result<x, b> =>
-  result.map(f)
+  <x, a, b>(f: (value: a) => b, result: Result<x, a>): Result<x, b> =>
+    result.isOk ? new Ok(f(result.value)) : result
 
 export const format =
-  <x, y, a> (f:(error:x) => y, result:Result<x, a>):Result<y, a> =>
-  result.format(f)
+  <x, y, a>(f: (error: x) => y, result: Result<x, a>): Result<y, a> =>
+    result.isOk ? result : new Error(f(result.error))
 
 export const toValue =
-  <x, a> (result:Result<x, a>, fallback:a):a =>
-  result.toValue(fallback)
+  <x, a>(result: Result<x, a>, fallback: a): a =>
+    result.isOk ? result.value : fallback
 
 export const toMaybe =
-  <x, a> (result:Result<x, a>):null|a =>
-  result.toMaybe()
+  <x, a>(result: Result<x, a>): Maybe<a> =>
+    result.isOk ? result.value : null
 
-export const isOk = <x, a> (result:Result<x, a>):result is Ok<x, a> =>
+export const isOk = <x, a>(result: Result<x, a>): result is Ok<a> =>
   result.isOk
 
-export const isError = <x, a> (result:Result<x, a>):result is Error<x, a> =>
-  result.isError
+export const isError = <x, a>(result: Result<x, a>): result is Error<x> =>
+  !result.isOk
